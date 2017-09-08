@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <speedment.enterprise.version>1.1.8</speedment.enterprise.version>
+        <speedment.enterprise.version>1.1.10</speedment.enterprise.version>
     </properties>
   
     <dependencies>
@@ -88,8 +88,6 @@
                 
             </plugin>
             
-            
-            
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -114,7 +112,6 @@
                     </execution>
                 </executions>
             </plugin>
-            
             
         </plugins>
     </build>
