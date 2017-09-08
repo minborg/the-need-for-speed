@@ -20,7 +20,9 @@ import com.speedment.enterprise.plugins.json.JsonComponent;
 import com.speedment.enterprise.plugins.json.JsonEncoder;
 import com.speedment.enterprise.virtualcolumn.runtime.VirtualColumnBundle;
 import com.speedment.runtime.core.ApplicationBuilder.LogType;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -65,12 +67,11 @@ public class Main {
                 )
             )
             .build();
-        
+
         System.out.println(
             films.stream().collect(filmCollector)
         );
-        
-        
+
         List<Film> secondPage = films.stream()
             .filter(Film.RATING.equal("PG-13"))
             .sorted(Film.TITLE.comparator())
@@ -86,26 +87,35 @@ public class Main {
 
         System.out.println(count);
 
-        if (1 == 0) {
-            bench("page", () -> {
-                int len = page(films, 1).size();
-            });
+        bench("page", () -> {
+            int len = page(films, 1).size();
+        });
 
-            bench("count", () -> {
-                long cnt = count(films);
-            });
-        } else {
-            bench("pageJsonSerialize", () -> {
-                String jsonResult = pageJson(films, 1);
-            });
+        bench("count", () -> {
+            long cnt = count(films);
+        });
 
-//            IntStream.range(0, 1000).forEach($ -> {
-            bench("pageJsonInPlaceSerialize", () -> {
-                String jsonResult = pageJson(films, 1, filmEncoder);
-            });
-//            });
+        bench("pageJsonSerialize", () -> {
+            String jsonResult = pageJson(films, 1);
+        });
 
-        }
+        bench("pageJsonInPlaceSerialize", () -> {
+            String jsonResult = pageJson(films, 1, filmEncoder);
+        });
+
+        String jsonFilmsSequential = films.stream()
+            .filter(Film.RATING.equal("PG-13"))
+            .collect(JsonCollectors.toList(filmEncoder));
+
+        String pg13Films = films.stream()
+            .parallel()
+            .filter(Film.RATING.equal("PG-13"))
+            .collect(JsonCollectors.toList(filmEncoder));
+
+        System.out.println(jsonFilmsSequential);
+        System.out.println(pg13Films);
+
+        System.out.println(jsonFilmsSequential.equals(pg13Films));
 
     }
 
