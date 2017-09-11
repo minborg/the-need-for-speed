@@ -36,7 +36,7 @@ public class Main {
     public static void main(String... param) {
         SakilaApplication app = new SakilaApplicationBuilder()
             .withPassword("sakila-password")
-            .withBundle(VirtualColumnBundle.class)
+//            .withBundle(VirtualColumnBundle.class)
             .withBundle(DataStoreBundle.class)
             .withBundle(JsonBundle.class)
             //.withLogging(LogType.STREAM)

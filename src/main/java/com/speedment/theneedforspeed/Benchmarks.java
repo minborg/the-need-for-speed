@@ -67,7 +67,7 @@ public class Benchmarks {
         
         SakilaApplicationBuilder builder = new SakilaApplicationBuilder()
             .withPassword("sakila-password")
-            .withBundle(VirtualColumnBundle.class)
+            //.withBundle(VirtualColumnBundle.class)
             .withBundle(JsonBundle.class)
             ;
 //            .withLogging(LogType.STREAM);
